@@ -1,0 +1,29 @@
+body{
+    background-color: whitesmoke;
+}
+.top{
+    font-size: 2.5rem;
+    text-align: right;
+}
+.text{
+    text-align: right;
+    margin: 10px 0px;
+}
+.poker{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    div{
+        margin: 0.5rem;
+        cursor: pointer;
+    }
+}
+.black{
+    background-color: black;
+    height: 150px;
+    width: 105px;
+}
+.hide{
+    visibility: hidden;
+    opacity: 0;
+}

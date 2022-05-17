@@ -1,0 +1,41 @@
+body {
+  background-color: whitesmoke;
+}
+
+.top {
+  font-size: 2.5rem;
+  text-align: right;
+}
+
+.text {
+  text-align: right;
+  margin: 10px 0px;
+}
+
+.poker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.poker div {
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.black {
+  background-color: black;
+  height: 150px;
+  width: 105px;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+/*# sourceMappingURL=poker-style.css.map */
