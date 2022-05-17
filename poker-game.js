@@ -33,6 +33,11 @@ deck.forEach((element) => {
     img.classList.add('hide')
     img.info = element;
     back.appendChild(img); 
+
+    // cover
+    let cover = document.createElement('div');
+    back.appendChild(cover);
+
     board.appendChild(back);
 })
 // score
@@ -40,7 +45,7 @@ let scoreHTML = document.querySelector('#score');
 let amountHTML = document.querySelector('#amount');
 let score = 0;
 let amount = 0;
-let changeScore = function () {
+function changeScore() {
     scoreHTML.innerHTML = `得分：${score}`;
     amountHTML.innerHTML = `嘗試次數：${amount}`;
 };
@@ -51,7 +56,7 @@ let showOut = [];
 pokers.forEach((elem) => {
     elem.addEventListener('click', () => {
         elem.classList.remove('black');
-        let card = elem.children[0];
+        let card = elem.firstChild;
         card.classList.remove('hide');
         showOut.push(card);
 
@@ -67,6 +72,10 @@ pokers.forEach((elem) => {
                     }, 1000);
                 })
             } else {
+                showOut.forEach((elem) => {
+                    let cover = elem.parentElement.children[1];
+                    cover.style.display = 'block';
+                })
                 score += 100;
                 changeScore();
             }

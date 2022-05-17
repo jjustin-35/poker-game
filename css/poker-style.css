@@ -26,6 +26,18 @@ body {
 .poker div {
   margin: 0.5rem;
   cursor: pointer;
+  position: relative;
+}
+
+.poker div div {
+  display: none;
+  position: absolute;
+  top: 0;
+  margin: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .black {
