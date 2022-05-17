@@ -74,7 +74,7 @@ pokers.forEach((elem) => {
             } else {
                 showOut.forEach((elem) => {
                     let cover = elem.parentElement.children[1];
-                    cover.style.display = 'block';
+                    setTimeout(()=>{cover.style.display = 'block'}, 300);
                 })
                 score += 100;
                 changeScore();
