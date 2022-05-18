@@ -26,20 +26,20 @@ console.log(deck[0])
 let board = document.querySelector('main.poker');
 
 deck.forEach((element) => {
-    let back = document.createElement('div');
-    back.classList.add('black');
-    let img = document.createElement('img');
+    let card = addBlock('div.card');
+    card.info = element;
+    let cardBack = addBlock('div.cardBack');
+    let cardFront = addBlock('div.cardFront');
+    let img = addBlock('img');
     img.src = element.img;
-    img.classList.add('hide');
-    img.info = element;
-    back.appendChild(img); 
+    cardFront.appendChild(img);
 
-    // cover
-    let cover = document.createElement('div');
-    cover.classList.add('cardBack');
-    back.appendChild(cover);
+    let cover = addBlock('div.cover');
 
-    board.appendChild(back);
+    card.appendChild(cardBack);
+    card.appendChild(cardFront);
+    card.appendChild(cover);
+    board.appendChild(card);
 })
 // score
 let scoreHTML = document.querySelector('#score');
@@ -52,14 +52,12 @@ function changeScore() {
 };
 
 // DOM
-let pokers = board.querySelectorAll('div');
+let pokers = board.querySelectorAll('div.card');
 let showOut = [];
 pokers.forEach((elem) => {
     elem.addEventListener('click', () => {
-        elem.classList.add('flip');
-        let card = elem.firstChild;
-        card.classList.remove('hide');
-        showOut.push(card);
+        elem.style.transform = 'rotateY(180deg)';
+        showOut.push(elem);
 
         if (showOut.length == 2) {
             amount++;
@@ -67,14 +65,12 @@ pokers.forEach((elem) => {
             if (showOut[0].info.name != showOut[1].info.name) {
                 showOut.forEach((elem) => {
                     setTimeout(() => {
-                        elem.classList.add('hide');
-                        let div = elem.parentElement;
-                        div.classList.add('black');
+                        elem.style.transform = '';
                     }, 1000);
                 })
             } else if(showOut[0].info.name == showOut[1].info.name && showOut[0] !== showOut[1]){
                 showOut.forEach((elem) => {
-                    let cover = elem.parentElement.children[1];
+                    let cover = elem.children[2];
                     setTimeout(()=>{cover.style.display = 'block'}, 300);
                 })
                 score += 100;
@@ -87,3 +83,23 @@ pokers.forEach((elem) => {
         }
     })
 })
+
+function addBlock(e) {
+    if (/\./.test(e)) {
+        let words = e.split('.');
+        let element = words[0];
+        let addClass = words[1];
+        if (/\s/.test(addClass)) {
+            addClass = addClass.split(/\s/);
+        } else {
+            addClass = [addClass];
+        }
+        let block = document.createElement(element);
+        addClass.forEach((c) => {
+            block.classList.add(c);
+        })
+        return block;
+    } else {
+        return document.createElement(e);
+    }
+}
