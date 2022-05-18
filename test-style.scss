@@ -1,0 +1,30 @@
+.cardWrap{
+    width: 105px;
+    height: 150px;
+    .card{
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+        &:focus{
+            transform: rotateY(180deg);
+        }
+
+        .cardFront{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #e8e8e8;
+            backface-visibility: hidden;
+        }
+        .cardBack{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
+    }
+}

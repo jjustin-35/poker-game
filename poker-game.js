@@ -30,12 +30,13 @@ deck.forEach((element) => {
     back.classList.add('black');
     let img = document.createElement('img');
     img.src = element.img;
-    img.classList.add('hide')
+    img.classList.add('hide');
     img.info = element;
     back.appendChild(img); 
 
     // cover
     let cover = document.createElement('div');
+    cover.classList.add('cardBack');
     back.appendChild(cover);
 
     board.appendChild(back);
@@ -55,7 +56,7 @@ let pokers = board.querySelectorAll('div');
 let showOut = [];
 pokers.forEach((elem) => {
     elem.addEventListener('click', () => {
-        elem.classList.remove('black');
+        elem.classList.add('flip');
         let card = elem.firstChild;
         card.classList.remove('hide');
         showOut.push(card);
@@ -71,13 +72,16 @@ pokers.forEach((elem) => {
                         div.classList.add('black');
                     }, 1000);
                 })
-            } else {
+            } else if(showOut[0].info.name == showOut[1].info.name && showOut[0] !== showOut[1]){
                 showOut.forEach((elem) => {
                     let cover = elem.parentElement.children[1];
                     setTimeout(()=>{cover.style.display = 'block'}, 300);
                 })
                 score += 100;
                 changeScore();
+            } else {
+                // 避免同張牌按兩次
+                showOut.pop();
             }
             showOut = [];
         }
