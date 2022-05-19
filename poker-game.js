@@ -54,6 +54,7 @@ function changeScore() {
 // DOM
 let pokers = board.querySelectorAll('div.card');
 let showOut = [];
+let counter = 0;
 pokers.forEach((elem) => {
     elem.addEventListener('click', () => {
         elem.style.transform = 'rotateY(180deg)';
@@ -68,18 +69,25 @@ pokers.forEach((elem) => {
                         elem.style.transform = '';
                     }, 1000);
                 })
+                showOut = [];
             } else if(showOut[0].info.name == showOut[1].info.name && showOut[0] !== showOut[1]){
                 showOut.forEach((elem) => {
                     let cover = elem.children[2];
                     setTimeout(()=>{cover.style.display = 'block'}, 300);
                 })
                 score += 100;
+                counter += 2;
                 changeScore();
+                showOut = [];
             } else {
                 // 避免同張牌按兩次
                 showOut.pop();
             }
-            showOut = [];
+        }
+        // 停止計時器(click後才會觸發，順序在setInterval之後)
+        if (counter == deck.length) {
+            console.log('true')
+            clearInterval(intervalID);
         }
     })
 })
@@ -103,3 +111,32 @@ function addBlock(e) {
         return document.createElement(e);
     }
 }
+
+// 計時器
+let timer = document.querySelector('span#timer');
+
+let min = 0;
+let hr = 0;
+let sec = 0;
+
+let intervalID = setInterval(() => {
+    function addZero(time) {
+        if (time < 10) {
+            time = '0' + time;
+        }
+
+        return time;
+    }
+
+    sec++;
+    if (sec == 60) {
+        sec = 0;
+        min++;
+    }
+    if (min == 60) {
+        min = 0;
+        hr++;
+    }
+
+    timer.innerHTML = `${addZero(hr)}:${addZero(min)}:${addZero(sec)}`;
+}, 1000);
