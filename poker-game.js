@@ -202,9 +202,9 @@ let intervalID = setInterval(() => {
     timer.innerHTML = lastData.getTimeString(timeObject);
 }, 1000);
 
-function addBlock(e) {
-    if (/\./.test(e)) {
-        let words = e.split('.');
+function addBlock(html) {
+    if (/\./.test(html)) {
+        let words = html.split('.');
         let element = words[0];
         let addClass = words[1];
         if (/\s/.test(addClass)) {
@@ -218,6 +218,6 @@ function addBlock(e) {
         })
         return block;
     } else {
-        return document.createElement(e);
+        return document.createElement(html);
     }
 }
