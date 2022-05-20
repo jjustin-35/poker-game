@@ -1,3 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 body {
   background-color: whitesmoke;
 }
@@ -5,11 +12,76 @@ body {
 .top {
   font-size: 2.5rem;
   text-align: right;
+  padding: 0 1rem;
 }
 
-.text {
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1rem;
+}
+
+nav .text {
   text-align: right;
   margin: 10px 0px;
+}
+
+nav button {
+  margin: 10px 0;
+  padding: 1rem 1.5rem;
+  background-color: #00cbcb;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.bestBlock {
+  font-size: 2.5rem;
+  padding: 2rem 3rem;
+  border: solid 2px black;
+  border-radius: 20px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.hideBlock {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.showBlock {
+  visibility: visible;
+  opacity: 1;
+}
+
+.filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .poker {
@@ -33,6 +105,7 @@ body {
           transform-style: preserve-3d;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 .poker .card .cardFront {

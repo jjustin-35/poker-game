@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="./css/poker-style.css">
 </head>
 <body>
-    <nav class="top">記憶遊戲</nav>
-    <div class="text" id="score">得分：0</div>
-    <div class="text" id="amount">嘗試次數：0</div>
-    <div class="text" id="time">經過時間：<span id="timer">00:00:00</span></div>
+    <h1 class="top">記憶遊戲</h1>
+    <nav>
+        <div class="text" id="score">得分：0</div>
+        <div class="text" id="amount">嘗試次數：0</div>
+        <div class="text" id="time">經過時間：<span id="timer">00:00:00</span></div>
+        <button id="best">最佳成績</button>
+    </nav>
+    <div class="filter hideBlock"></div>
+    <article class="bestBlock hideBlock">
+        最佳得分：<span id="bestScore">0</span><br>
+        最佳次數：<span id="bestAmount">0</span><br>
+        花費時間：<span id="bestTime">00:00</span>
+    </article>
     <main class="poker">
     </main>
     <script src="./poker-game.js"></script>

@@ -1,14 +1,69 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body{
     background-color: whitesmoke;
 }
 .top{
     font-size: 2.5rem;
     text-align: right;
+    padding:0 1rem;
 }
-.text{
-    text-align: right;
-    margin: 10px 0px;
+
+nav{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    .text{
+        text-align: right;
+        margin: 10px 0px;
+    }
+    button{
+        margin: 10px 0;
+        padding: 1rem 1.5rem;
+        background-color: rgb(0, 203, 203);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
 }
+.bestBlock{
+    font-size: 2.5rem;
+    padding: 2rem 3rem;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+.hideBlock{
+    visibility: hidden;
+    opacity: 0;
+}
+.showBlock{
+    visibility: visible;
+    opacity: 1;
+}
+
+.filter{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.3);
+    transition: all 0.5s ease;
+}
+
 .poker{
     display: flex;
     justify-content: center;
@@ -21,6 +76,7 @@ body{
         margin: 0.5rem;
         transform-style: preserve-3d;
         transition: all 0.5s ease;
+        cursor: pointer;
 
         .cardFront{
             position: absolute;
@@ -28,6 +84,7 @@ body{
             height: 100%;
             background-color: #e8e8e8;
             backface-visibility: hidden;
+            // 讓正面翻過去
             transform: rotateY(180deg);
         }
         .cardBack{

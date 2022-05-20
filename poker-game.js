@@ -12,8 +12,8 @@ let deck = [];
 let suits = ['spade', 'heart', 'diamond', 'club'];
 let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
 
-for (let i = 0; i < 4; i++){
-    for (let y = 0; y < 13; y++){
+for (let i = 0; i < 2; i++){
+    for (let y = 0; y < 1; y++){
         deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
     }
 }
@@ -55,6 +55,39 @@ function changeScore() {
 let pokers = board.querySelectorAll('div.card');
 let showOut = [];
 let counter = 0;
+
+// 遊戲資料物件設定
+class GameData{
+    constructor(bestScore, bestAmount, sec, min, hr) {
+        this.bestScore = bestScore,
+        this.bestAmount = bestAmount,
+        this.bestTimer = {
+            second: sec,
+            minute: min,
+            hour: hr,
+        }
+    }
+    getTimeString(obj = this.bestTimer) {
+        function addZero(time) {
+            if (time < 10) {
+                time = '0' + time;
+            }
+        
+            return time;
+        }
+        return `${addZero(obj.hour)}:${addZero(obj.minute)}:${addZero(obj.second)}`;
+    }
+}
+
+// 遊戲資料取出
+let lastData = localStorage.getItem('gameData');
+if (!lastData) {
+    lastData = new GameData(0, Infinity, Infinity, Infinity, Infinity);
+} else {
+    lastData = JSON.parse(lastData);
+}
+let { bestScore, bestAmount, bestTimer } = lastData;
+
 pokers.forEach((elem) => {
     elem.addEventListener('click', () => {
         elem.style.transform = 'rotateY(180deg)';
@@ -84,13 +117,90 @@ pokers.forEach((elem) => {
                 showOut.pop();
             }
         }
-        // 停止計時器(click後才會觸發，順序在setInterval之後)
+        // 停止
         if (counter == deck.length) {
-            console.log('true')
+            // 停止計時器(click後才會觸發，順序在setInterval之後)
             clearInterval(intervalID);
+            // 儲存最佳資料
+            if (bestScore < score) {
+                bestScore = score;
+            }
+            if (bestAmount > amount) {
+                bestAmount = amount;
+            }
+            if (bestTimer.hour > timeObject.hour) {
+                bestTimer = timeObject;
+            } else if (bestTimer.minute > timeObject.minute) {
+                bestTimer = timeObject;
+            } else if (bestTimer.second > timeObject.second) {
+                bestTimer = timeObject;
+            }
+
+            lastData.bestScore = bestScore;
+            lastData.bestAmount = bestAmount;
+            lastData.bestTimer = bestTimer;
+            
+            localStorage.setItem('gameData', JSON.stringify(lastData));
         }
     })
 })
+
+// 顯示最佳成績
+let bestbtn = document.querySelector('button#best');
+let bestBlock = document.querySelector('.bestBlock');
+let filter = document.querySelector('.filter');
+
+let blockContent = bestBlock.querySelectorAll('span');
+
+if (lastData.bestScore==0 && lastData.bestAmount == Infinity) {
+    blockContent[0].innerHTML = '-';
+    blockContent[1].innerHTML = '-';
+    blockContent[2].innerHTML = '--:--:--';
+} else {
+    blockContent[0].innerHTML = lastData.bestScore;
+    blockContent[1].innerHTML = lastData.bestAmount;
+    blockContent[2].innerHTML = lastData.getTimeString();
+}
+
+bestbtn.addEventListener('click', () => {
+    bestBlock.classList.toggle('hideBlock');
+    bestBlock.classList.toggle('showBlock');
+    filter.classList.toggle('hideBlock');
+    filter.classList.toggle('showBlock');
+})
+
+filter.addEventListener('click', () => {
+    bestBlock.classList.toggle('hideBlock');
+    bestBlock.classList.toggle('showBlock');
+    filter.classList.toggle('hideBlock');
+    filter.classList.toggle('showBlock');
+})
+
+// 計時器
+let timer = document.querySelector('span#timer');
+
+let min = 0;
+let hr = 0;
+let sec = 0;
+let timeObject;
+
+let intervalID = setInterval(() => {
+    sec++;
+    if (sec == 60) {
+        sec = 0;
+        min++;
+    }
+    if (min == 60) {
+        min = 0;
+        hr++;
+    }
+    timeObject = {
+        second: sec,
+        minute: min,
+        hour: hr,
+    }
+    timer.innerHTML = lastData.getTimeString(timeObject);
+}, 1000);
 
 function addBlock(e) {
     if (/\./.test(e)) {
@@ -111,32 +221,3 @@ function addBlock(e) {
         return document.createElement(e);
     }
 }
-
-// 計時器
-let timer = document.querySelector('span#timer');
-
-let min = 0;
-let hr = 0;
-let sec = 0;
-
-let intervalID = setInterval(() => {
-    function addZero(time) {
-        if (time < 10) {
-            time = '0' + time;
-        }
-
-        return time;
-    }
-
-    sec++;
-    if (sec == 60) {
-        sec = 0;
-        min++;
-    }
-    if (min == 60) {
-        min = 0;
-        hr++;
-    }
-
-    timer.innerHTML = `${addZero(hr)}:${addZero(min)}:${addZero(sec)}`;
-}, 1000);
