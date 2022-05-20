@@ -82,7 +82,25 @@ class GameData{
 // 遊戲資料取出
 let lastData = localStorage.getItem('gameData');
 if (!lastData) {
-    lastData = new GameData(0, Infinity, Infinity, Infinity, Infinity);
+    lastData = {
+        bestScore: 0,
+        bestAmount: Infinity,
+        bestTimer: {
+            second: Infinity,
+            minute: Infinity,
+            Hour: Infinity
+        },
+        getTimeString: function(obj = this.bestTimer) {
+            function addZero(time) {
+                if (time < 10) {
+                    time = '0' + time;
+                }
+            
+                return time;
+            }
+            return `${addZero(obj.hour)}:${addZero(obj.minute)}:${addZero(obj.second)}`;
+        }
+    };
 } else {
     lastData = JSON.parse(lastData);
 }
