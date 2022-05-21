@@ -20,7 +20,6 @@ for (let i = 0; i < 4; i++){
 
 // 隨機排序
 deck.sort(() => 0.5 - Math.random());
-console.log(deck[0])
 
 // 放入html
 let board = document.querySelector('main.poker');
@@ -80,7 +79,6 @@ pokers.forEach((elem) => {
 
         if (showOut.length == 2) {
             amount++;
-            changeScore();
             if (showOut[0].info.name != showOut[1].info.name) {
                 showOut.forEach((elem) => {
                     setTimeout(() => {
@@ -100,7 +98,9 @@ pokers.forEach((elem) => {
             } else {
                 // 避免同張牌按兩次
                 showOut.pop();
+                amount--;
             }
+            changeScore();
         }
         // 停止
         if (counter == deck.length) {
@@ -198,9 +198,9 @@ function getTimeString(obj) {
     return `${addZero(obj.hour)}:${addZero(obj.minute)}:${addZero(obj.second)}`;
 }
 
-function addBlock(e) {
-    if (/\./.test(e)) {
-        let words = e.split('.');
+function addBlock(html) {
+    if (/\./.test(html)) {
+        let words = html.split('.');
         let element = words[0];
         let addClass = words[1];
         if (/\s/.test(addClass)) {
