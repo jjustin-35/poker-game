@@ -12,8 +12,8 @@ let deck = [];
 let suits = ['spade', 'heart', 'diamond', 'club'];
 let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
 
-for (let i = 0; i < 2; i++){
-    for (let y = 0; y < 1; y++){
+for (let i = 0; i < 4; i++){
+    for (let y = 0; y < 13; y++){
         deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
     }
 }
@@ -56,33 +56,18 @@ let pokers = board.querySelectorAll('div.card');
 let showOut = [];
 let counter = 0;
 
-// 遊戲資料物件設定
-class GameData{
-    constructor(bestScore, bestAmount, sec, min, hr) {
-        this.bestScore = bestScore,
-        this.bestAmount = bestAmount,
-        this.bestTimer = {
-            second: sec,
-            minute: min,
-            hour: hr,
-        }
-    }
-    getTimeString(obj = this.bestTimer) {
-        function addZero(time) {
-            if (time < 10) {
-                time = '0' + time;
-            }
-        
-            return time;
-        }
-        return `${addZero(obj.hour)}:${addZero(obj.minute)}:${addZero(obj.second)}`;
-    }
-}
-
 // 遊戲資料取出
 let lastData = localStorage.getItem('gameData');
 if (!lastData) {
-    lastData = new GameData(0, Infinity, Infinity, Infinity, Infinity);
+    lastData = {
+        bestScore: 0,
+        bestAmount: Infinity,
+        bestTimer: {
+            second: Infinity,
+            minute: Infinity,
+            Hour: Infinity
+        },
+    };
 } else {
     lastData = JSON.parse(lastData);
 }
@@ -159,7 +144,7 @@ if (lastData.bestScore==0 && lastData.bestAmount == Infinity) {
 } else {
     blockContent[0].innerHTML = lastData.bestScore;
     blockContent[1].innerHTML = lastData.bestAmount;
-    blockContent[2].innerHTML = lastData.getTimeString();
+    blockContent[2].innerHTML = getTimeString(lastData.bestTimer);
 }
 
 bestbtn.addEventListener('click', () => {
@@ -199,12 +184,23 @@ let intervalID = setInterval(() => {
         minute: min,
         hour: hr,
     }
-    timer.innerHTML = lastData.getTimeString(timeObject);
+    timer.innerHTML = getTimeString(timeObject);
 }, 1000);
 
-function addBlock(html) {
-    if (/\./.test(html)) {
-        let words = html.split('.');
+function getTimeString(obj) {
+    function addZero(time) {
+        if (time < 10) {
+            time = '0' + time;
+        }
+    
+        return time;
+    }
+    return `${addZero(obj.hour)}:${addZero(obj.minute)}:${addZero(obj.second)}`;
+}
+
+function addBlock(e) {
+    if (/\./.test(e)) {
+        let words = e.split('.');
         let element = words[0];
         let addClass = words[1];
         if (/\s/.test(addClass)) {
