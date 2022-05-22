@@ -1,9 +1,9 @@
+// localStorage.clear();
+
 // 難度選擇
 let difficutyBlk = document.querySelector('article.difficulty');
 let difficultyBtn = difficutyBlk.querySelectorAll('button');
 let filter = document.querySelector('.filter');
-
-let difficulty;
 
 // 創造poker object
 class Pokers {
@@ -19,14 +19,14 @@ difficultyBtn.forEach((e, i) => {
         difficutyBlk.classList.toggle('hideBlock');
         filter.classList.toggle('hideBlock');
         // easy = 2, normal = 3, hard = 4 suits
-        difficulty = i + 2;
+        let difficultyNum = i + 2;
 
         // 放入list
         let deck = [];
         let suits = ['spade', 'heart', 'diamond', 'club'];
         let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
 
-        for (let i = 0; i < difficulty; i++){
+        for (let i = 0; i < difficultyNum; i++){
             for (let y = 0; y < 13; y++){
                 deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
             }
@@ -71,8 +71,10 @@ difficultyBtn.forEach((e, i) => {
 
         // 遊戲資料取出
         let lastData = localStorage.getItem('gameData');
+
         if (!lastData) {
             lastData = {
+                difficulty: difficultyNum == 2 ? 'easy' : (difficultyNum == 3) ? 'normal' : 'hard',
                 bestScore: 0,
                 bestAmount: Infinity,
                 bestTimer: {
@@ -84,7 +86,7 @@ difficultyBtn.forEach((e, i) => {
         } else {
             lastData = JSON.parse(lastData);
         }
-        let { bestScore, bestAmount, bestTimer } = lastData;
+        let {difficulty, bestScore, bestAmount, bestTimer } = lastData;
 
         pokers.forEach((elem) => {
             elem.addEventListener('click', () => {
