@@ -9,7 +9,46 @@ body {
   background-color: whitesmoke;
 }
 
-.top {
+article.difficulty {
+  font-size: 2.5rem;
+  padding: 2rem 3rem;
+  border: solid 2px black;
+  border-radius: 20px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+article.difficulty button {
+  color: white;
+  border: none;
+  width: 6rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+article.difficulty button:nth-child(2) {
+  background-color: #01c401;
+}
+
+article.difficulty button:nth-child(3) {
+  background-color: #ebeb03;
+}
+
+article.difficulty button:nth-child(4) {
+  background-color: red;
+}
+
+h1.top {
   font-size: 2.5rem;
   text-align: right;
   padding: 0 1rem;

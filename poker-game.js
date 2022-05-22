@@ -1,3 +1,19 @@
+// 難度選擇
+let difficutyBlk = document.querySelector('article.difficulty');
+let difficultyBtn = difficutyBlk.querySelectorAll('button');
+let filter = document.querySelector('.filter');
+
+let difficulty;
+
+difficultyBtn.forEach((e, i) => {
+    e.addEventListener('click', () => {
+        difficutyBlk.classList.toggle('hideBlock');
+        filter.classList.toggle('hideBlock');
+        // easy = 2, normal = 3, hard = 4 suits
+        difficulty = i + 2;
+    })
+})
+
 // 創造poker object
 class Pokers {
     constructor(name, suit, img) {
@@ -12,7 +28,7 @@ let deck = [];
 let suits = ['spade', 'heart', 'diamond', 'club'];
 let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
 
-for (let i = 0; i < 4; i++){
+for (let i = 0; i < difficulty; i++){
     for (let y = 0; y < 13; y++){
         deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
     }
@@ -133,7 +149,6 @@ pokers.forEach((elem) => {
 // 顯示最佳成績
 let bestbtn = document.querySelector('button#best');
 let bestBlock = document.querySelector('.bestBlock');
-let filter = document.querySelector('.filter');
 
 let blockContent = bestBlock.querySelectorAll('span');
 
@@ -152,13 +167,13 @@ bestbtn.addEventListener('click', () => {
     bestBlock.classList.toggle('showBlock');
     filter.classList.toggle('hideBlock');
     filter.classList.toggle('showBlock');
-})
 
-filter.addEventListener('click', () => {
-    bestBlock.classList.toggle('hideBlock');
-    bestBlock.classList.toggle('showBlock');
-    filter.classList.toggle('hideBlock');
-    filter.classList.toggle('showBlock');
+    filter.addEventListener('click', () => {
+        bestBlock.classList.add('hideBlock');
+        bestBlock.classList.remove('showBlock');
+        filter.classList.add('hideBlock');
+        filter.classList.remove('showBlock');
+    })
 })
 
 // 計時器
@@ -187,6 +202,7 @@ let intervalID = setInterval(() => {
     timer.innerHTML = getTimeString(timeObject);
 }, 1000);
 
+// function
 function getTimeString(obj) {
     function addZero(time) {
         if (time < 10) {
