@@ -19,15 +19,15 @@ difficultyBtn.forEach((e, i) => {
         difficutyBlk.classList.toggle('hideBlock');
         filter.classList.toggle('hideBlock');
         // easy = 2, normal = 3, hard = 4 suits
-        let difficultyNum = i + 2;
+        let difficulty = i + 2;
 
         // 放入list
         let deck = [];
         let suits = ['spade', 'heart', 'diamond', 'club'];
         let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
 
-        for (let i = 0; i < difficultyNum; i++){
-            for (let y = 0; y < 13; y++){
+        for (let i = 0; i < difficulty; i++){
+            for (let y = 0; y < 2; y++){
                 deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
             }
         }
@@ -70,29 +70,43 @@ difficultyBtn.forEach((e, i) => {
         let counter = 0;
 
         // 遊戲資料取出
-        let lastData = localStorage.getItem('gameData');
-
-        if (!lastData) {
-            lastData = {
-                difficulty: difficultyNum == 2 ? 'easy' : (difficultyNum == 3) ? 'normal' : 'hard',
-                bestScore: 0,
-                bestAmount: Infinity,
-                bestTimer: {
+        let gameData = localStorage.getItem('gameData');
+        class GameData {
+            constructor() {
+                this.bestScore = 0;
+                this.bestAmount = Infinity;
+                this.bestTimer = {
                     second: Infinity,
                     minute: Infinity,
                     Hour: Infinity
-                },
-            };
+                };
+            }
+        };
+        if (!gameData) {
+            gameData = {
+                easy: new GameData(),
+                normal: new GameData(),
+                hard: new GameData(),
+            }
         } else {
-            lastData = JSON.parse(lastData);
+            gameData = JSON.parse(gameData);
         }
-        let {difficulty, bestScore, bestAmount, bestTimer } = lastData;
+
+        let lastData;
+        if (difficulty == 2) {
+            lastData = gameData.easy;
+        } else if (difficulty == 3) {
+            lastData = gameData.normal;
+        } else {
+            lastData = gameData.hard;
+        }
 
         pokers.forEach((elem) => {
             elem.addEventListener('click', () => {
                 elem.style.transform = 'rotateY(180deg)';
                 showOut.push(elem);
 
+                // main
                 if (showOut.length == 2) {
                     amount++;
                     if (showOut[0].info.name != showOut[1].info.name) {
@@ -123,25 +137,30 @@ difficultyBtn.forEach((e, i) => {
                     // 停止計時器(click後才會觸發，順序在setInterval之後)
                     clearInterval(intervalID);
                     // 儲存最佳資料
-                    if (bestScore < score) {
-                        bestScore = score;
+                    if (lastData.bestScore < score) {
+                        lastData.bestScore = score;
                     }
-                    if (bestAmount > amount) {
-                        bestAmount = amount;
+                    if (lastData.bestAmount > amount) {
+                        lastData.bestAmount = amount;
                     }
-                    if (bestTimer.hour > timeObject.hour) {
-                        bestTimer = timeObject;
-                    } else if (bestTimer.minute > timeObject.minute) {
-                        bestTimer = timeObject;
-                    } else if (bestTimer.second > timeObject.second) {
-                        bestTimer = timeObject;
+                    if (lastData.bestTimer.hour > timeObject.hour) {
+                        lastData.bestTimer = timeObject;
+                    } else if (lastData.bestTimer.minute > timeObject.minute) {
+                        lastData.bestTimer = timeObject;
+                    } else if (lastData.bestTimer.second > timeObject.second) {
+                        lastData.bestTimer = timeObject;
                     }
 
-                    lastData.bestScore = bestScore;
-                    lastData.bestAmount = bestAmount;
-                    lastData.bestTimer = bestTimer;
+                    if (difficulty == 2) {
+                        gameData.easy = lastData ;
+                    } else if (difficulty == 3) {
+                        gameData.normal = lastData;
+                    } else {
+                        gameData.hard = lastData;
+                    }
                     
-                    localStorage.setItem('gameData', JSON.stringify(lastData));
+                    // 讓Infinity可以是Infinity，不會在JSON中變成null
+                    localStorage.setItem('gameData', JSON.stringify(gameData, function (k,v) { return v === Infinity ? "Infinity" : v; }));
                 }
             })
         })
