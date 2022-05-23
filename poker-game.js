@@ -71,8 +71,8 @@ difficultyBtn.forEach((e, i) => {
         // score
         let scoreHTML = document.querySelector('#score');
         let amountHTML = document.querySelector('#amount');
-        let score = 0;
-        let amount = 0;
+        let score = 0, amount = 0;
+        
         function changeScore() {
             scoreHTML.innerHTML = `得分：${score}`;
             amountHTML.innerHTML = `嘗試次數：${amount}`;
@@ -192,11 +192,7 @@ difficultyBtn.forEach((e, i) => {
 
         // 計時器
         let timer = document.querySelector('span#timer');
-
-        let min = 0;
-        let hr = 0;
-        let sec = 0;
-        let timeObject;
+        let min = 0, hr = 0, sec = 0, timeObject;
 
         let intervalID = setInterval(() => {
             sec++;
