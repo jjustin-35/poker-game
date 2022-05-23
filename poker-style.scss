@@ -1,3 +1,27 @@
+
+@mixin createWhiteBlk($z){
+    font-size: 2.5rem;
+    padding: 2rem 3rem;
+    border: solid 2px black;
+    border-radius: 20px;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: $z;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+@mixin createBtn($color){
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    margin: 1rem;
+    cursor: pointer;
+    background-color: $color;
+}
 *{
     margin: 0;
     padding: 0;
@@ -8,26 +32,10 @@ body{
 }
 
 article.difficulty{
-    font-size: 2.5rem;
-    padding: 2rem 3rem;
-    border: solid 2px black;
-    border-radius: 20px;
-    background-color: white;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 2;
-    transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
+    @include createWhiteBlk(2);
     button{
-        color: white;
-        border: none;
+        @include createBtn(black);
         width: 6rem;
-        border-radius: 10px;
-        font-size: 1rem;
-        padding: 1rem 1.5rem;
-        margin: 1rem;
-        cursor: pointer;
         &:nth-child(2){
             background-color: rgb(1, 196, 1);
         }
@@ -57,27 +65,12 @@ nav{
         margin: 10px 0px;
     }
     button{
+        @include createBtn(rgb(0, 203, 203));
         margin: 10px 0;
-        padding: 1rem 1.5rem;
-        background-color: rgb(0, 203, 203);
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
     }
 }
 .bestBlock{
-    font-size: 2.5rem;
-    padding: 2rem 3rem;
-    border: solid 2px black;
-    border-radius: 20px;
-    background-color: white;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
+    @include createWhiteBlk(2);
 }
 .hideBlock{
     visibility: hidden;
@@ -138,5 +131,16 @@ nav{
             z-index: 1;
             background-color: rgba(0,0,0,0.3);
         }
+    }
+}
+
+article.finished{
+    @include createWhiteBlk(2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button{
+        @include createBtn(purple);
     }
 }

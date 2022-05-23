@@ -28,12 +28,13 @@ article.difficulty {
 article.difficulty button {
   color: white;
   border: none;
-  width: 6rem;
   border-radius: 10px;
   font-size: 1rem;
   padding: 1rem 1.5rem;
   margin: 1rem;
   cursor: pointer;
+  background-color: black;
+  width: 6rem;
 }
 
 article.difficulty button:nth-child(2) {
@@ -77,13 +78,15 @@ nav .text {
 }
 
 nav button {
-  margin: 10px 0;
-  padding: 1rem 1.5rem;
-  background-color: #00cbcb;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
   cursor: pointer;
+  background-color: #00cbcb;
+  margin: 10px 0;
 }
 
 .bestBlock {
@@ -95,7 +98,7 @@ nav button {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 1;
+  z-index: 2;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   -webkit-transition: all 0.5s ease;
@@ -176,5 +179,45 @@ nav button {
   height: 100%;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+article.finished {
+  font-size: 2.5rem;
+  padding: 2rem 3rem;
+  border: solid 2px black;
+  border-radius: 20px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+article.finished button {
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+  cursor: pointer;
+  background-color: purple;
 }
 /*# sourceMappingURL=poker-style.css.map */

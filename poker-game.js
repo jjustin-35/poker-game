@@ -34,7 +34,7 @@ difficultyBtn.forEach((e, i) => {
         
         if (difficulty == 1) {
             suitAmount = 2;
-            cardAmount = 10;
+            cardAmount = 2;
         } else if (difficulty == 2) {
             suitAmount = 4;
             cardAmount = 8;
@@ -150,6 +150,11 @@ difficultyBtn.forEach((e, i) => {
                 if (counter == deck.length) {
                     // 停止計時器(click後才會觸發，順序在setInterval之後)
                     clearInterval(intervalID);
+
+                    // 跳出完成遊戲通知
+                    let finishedBlk = document.querySelector('article.finished');
+                    toggle(finishedBlk, filter);
+
                     // 儲存最佳資料
                     if (lastData.bestScore < score) {
                         lastData.bestScore = score;
@@ -174,7 +179,13 @@ difficultyBtn.forEach((e, i) => {
                     }
                     
                     // 讓Infinity可以是Infinity，不會在JSON中變成null
-                    localStorage.setItem('gameData', JSON.stringify(gameData, function (k,v) { return v === Infinity ? "Infinity" : v; }));
+                    localStorage.setItem('gameData', JSON.stringify(gameData, function (k, v) { return v === Infinity ? "Infinity" : v; }));
+                    
+                    // 重開一局
+                    let finishedBtn = finishedBlk.querySelector('button');
+                    finishedBtn.addEventListener('click', () => {
+                        window.location.reload();
+                    })
                 }
             })
         })
@@ -196,10 +207,7 @@ difficultyBtn.forEach((e, i) => {
         }
 
         bestbtn.addEventListener('click', () => {
-            bestBlock.classList.toggle('hideBlock');
-            bestBlock.classList.toggle('showBlock');
-            filter.classList.toggle('hideBlock');
-            filter.classList.toggle('showBlock');
+            toggle(bestBlock, filter);
 
             filter.addEventListener('click', () => {
                 bestBlock.classList.add('hideBlock');
@@ -267,4 +275,11 @@ function addBlock(html) {
     } else {
         return document.createElement(html);
     }
+}
+
+function toggle(...element) {
+    element.forEach(e => {
+        e.classList.toggle('hideBlock');
+        e.classList.toggle('showBlock');
+    })
 }
