@@ -18,17 +18,31 @@ difficultyBtn.forEach((e, i) => {
     e.addEventListener('click', () => {
         difficutyBlk.classList.toggle('hideBlock');
         filter.classList.toggle('hideBlock');
-        // easy = 2, normal = 3, hard = 4 suits
-        let difficulty = i + 2;
+        // easy = 1, normal = 2, hard = 3
+        let difficulty = i + 1;
 
         // 放入list
         let deck = [];
         let suits = ['spade', 'heart', 'diamond', 'club'];
-        let nameList = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
+        let nameList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
-        for (let i = 0; i < difficulty; i++){
-            for (let y = 0; y < 2; y++){
-                deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${y + 1}.jpg`));
+        // 隨機更改順序
+        suits = suits.sort(() => 0.5 - Math.random());
+        nameList = nameList.sort(() => 0.5 - Math.random());
+
+        let suitAmount = 4, cardAmount = 13;
+        
+        if (difficulty == 1) {
+            suitAmount = 2;
+            cardAmount = 10;
+        } else if (difficulty == 2) {
+            suitAmount = 4;
+            cardAmount = 8;
+        }
+
+        for (let i = 0; i < suitAmount; i++){
+            for (let y = 0; y < cardAmount; y++){
+                deck.push(new Pokers(nameList[y], suits[i], `./pukeImage/${suits[i]}_${nameList[y]}.jpg`));
             }
         }
 
@@ -93,9 +107,9 @@ difficultyBtn.forEach((e, i) => {
         }
 
         let lastData;
-        if (difficulty == 2) {
+        if (difficulty == 1) {
             lastData = gameData.easy;
-        } else if (difficulty == 3) {
+        } else if (difficulty == 2) {
             lastData = gameData.normal;
         } else {
             lastData = gameData.hard;
@@ -151,9 +165,9 @@ difficultyBtn.forEach((e, i) => {
                         lastData.bestTimer = timeObject;
                     }
 
-                    if (difficulty == 2) {
+                    if (difficulty == 1) {
                         gameData.easy = lastData ;
-                    } else if (difficulty == 3) {
+                    } else if (difficulty == 2) {
                         gameData.normal = lastData;
                     } else {
                         gameData.hard = lastData;
