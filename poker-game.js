@@ -190,6 +190,32 @@ difficultyBtn.forEach((e, i) => {
             })
         })
 
+        // 計時器
+        let timer = document.querySelector('span#timer');
+
+        let min = 0;
+        let hr = 0;
+        let sec = 0;
+        let timeObject;
+
+        let intervalID = setInterval(() => {
+            sec++;
+            if (sec == 60) {
+                sec = 0;
+                min++;
+            }
+            if (min == 60) {
+                min = 0;
+                hr++;
+            }
+            timeObject = {
+                second: sec,
+                minute: min,
+                hour: hr,
+            }
+            timer.innerHTML = getTimeString(timeObject);
+        }, 1000);
+
         // 顯示最佳成績
         let bestbtn = document.querySelector('button#best');
         let bestBlock = document.querySelector('.bestBlock');
@@ -216,32 +242,6 @@ difficultyBtn.forEach((e, i) => {
                 filter.classList.remove('showBlock');
             })
         })
-
-        // 計時器
-        let timer = document.querySelector('span#timer');
-
-        let min = 0;
-        let hr = 0;
-        let sec = 0;
-        let timeObject;
-
-        let intervalID = setInterval(() => {
-            sec++;
-            if (sec == 60) {
-                sec = 0;
-                min++;
-            }
-            if (min == 60) {
-                min = 0;
-                hr++;
-            }
-            timeObject = {
-                second: sec,
-                minute: min,
-                hour: hr,
-            }
-            timer.innerHTML = getTimeString(timeObject);
-        }, 1000);
     })
 })
 
