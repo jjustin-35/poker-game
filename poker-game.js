@@ -34,7 +34,7 @@ difficultyBtn.forEach((e, i) => {
         
         if (difficulty == 1) {
             suitAmount = 2;
-            cardAmount = 2;
+            cardAmount = 10;
         } else if (difficulty == 2) {
             suitAmount = 4;
             cardAmount = 8;
